@@ -1,0 +1,24 @@
+<table class="generic-table">
+  <thead>
+    <tr>
+      <th *ngFor="let col of columns">{{ col.label }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let row of data" (click)="onRowClick(row)">
+      <td *ngFor="let column of columns">
+        <ng-container [ngSwitch]="column.key">
+          <!-- Columna de acciones -->
+          <ng-container *ngSwitchCase="'actions'">
+            <button (click)="onEdit(row); $event.stopPropagation()">
+              Editar
+            </button>
+            <button (click)="onDelete(row); $event.stopPropagation()">
+              Eliminar
+            </button>
+          </ng-container>
+        </ng-container>
+      </td>
+    </tr>
+  </tbody>
+</table>
