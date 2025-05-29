@@ -13,7 +13,7 @@ import { Enterprise } from '../../../core/models/enterprise.model';
 export class EnterprisesComponent {
   private enterpriseService = inject(EnterpriseService);
   enterprises: Enterprise[] = [];
-
+  
   columns: { key: keyof Enterprise | 'actions'; label: string }[] = [
     { key: 'id', label: 'ID' },
     { key: 'name', label: 'Nombre' },
