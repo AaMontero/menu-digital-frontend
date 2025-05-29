@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
 import { MenuService } from '../../../../core/services/menu.service';
 import { Menu } from '../../../../core/models/menu.module';
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-menu',
   imports: [
@@ -16,9 +17,11 @@ import { Menu } from '../../../../core/models/menu.module';
     MatListModule,
     MatIconModule,
     MatButtonModule,
+    CommonModule
   ],
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.css',
+  standalone: true 
 })
 export class MenuComponent {
   private menuService = inject(MenuService);

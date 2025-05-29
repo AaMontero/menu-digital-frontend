@@ -6,13 +6,9 @@
         <mat-icon>home</mat-icon>
         <span>Inicio</span>
       </a>
-      <a mat-list-item routerLink="/about">
-        <mat-icon>info</mat-icon>
-        <span>Acerca de</span>
-      </a>
-      <a mat-list-item routerLink="/contact">
-        <mat-icon>contact_mail</mat-icon>
-        <span>Contacto</span>
+      <a *ngFor="let menu of menus" mat-list-item [routerLink]="menu.route">
+        <mat-icon>{{ menu.icon }}</mat-icon>
+        <span>{{ menu.label }}</span>
       </a>
     </mat-nav-list>
   </mat-sidenav>
@@ -20,7 +16,7 @@
   <mat-sidenav-content>
     <mat-toolbar color="primary">Mi Aplicación</mat-toolbar>
     <div class="main-content">
-        <router-outlet></router-outlet>
+      <router-outlet></router-outlet>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

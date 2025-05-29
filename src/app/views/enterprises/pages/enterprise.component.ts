@@ -1,13 +1,13 @@
 import { Component, inject } from '@angular/core';
-import { GenericTableComponent } from '../../shared/generic-table/generic-table.component';
-import { EnterpriseService } from '../../services/enterprise.service';
-import { Enterprise } from '../../models/enterprise.model';
+import { GenericTableComponent } from '../../../shared/generic-table/generic-table.component';
+import { EnterpriseService } from '../../../core/services/enterprise.service';
+import { Enterprise } from '../../../core/models/enterprise.model';
 
 @Component({
   selector: 'app-enterprises',
   imports: [GenericTableComponent],
-  templateUrl: './enterprises.component.html',
-  styleUrl: './enterprises.component.css',
+  templateUrl: './enterprise.component.html',
+  styleUrl: './enterprise.component.css',
   standalone: true,
 })
 export class EnterprisesComponent {
