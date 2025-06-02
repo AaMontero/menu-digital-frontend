@@ -14,7 +14,25 @@
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <mat-toolbar color="primary">Mi Aplicación</mat-toolbar>
+    <mat-toolbar color="primary">
+      <span>Mi Aplicación</span>
+      <span class="spacer"></span>
+
+      <ng-container *ngIf="!isLoggedIn; else loggedInButtons">
+        <button mat-button (click)="onLogin()">Ingresar</button>
+        <button mat-button (click)="onRegister()">Registrarse</button>
+      </ng-container>
+
+      <ng-template #loggedInButtons>
+        <button mat-icon-button (click)="onOptions()" matTooltip="Opciones">
+          <mat-icon>settings</mat-icon>
+        </button>
+        <button mat-icon-button (click)="onLogout()" matTooltip="Cerrar sesión">
+          <mat-icon>logout</mat-icon>
+        </button>
+      </ng-template>
+    </mat-toolbar>
+
     <div class="main-content">
       <router-outlet></router-outlet>
     </div>

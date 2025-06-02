@@ -10,7 +10,12 @@ import { CommonModule } from '@angular/common';
 })
 export class GenericTableComponent<T> {
   @Input() data: T[] = [];
-  @Input() columns: { key: string; label: string, isAction?: boolean, isSelection?: boolean }[] = [];
+  @Input() columns: {
+    key: string;
+    label: string;
+    isAction?: boolean;
+    isSelection?: boolean;
+  }[] = [];
   @Output() rowClicked = new EventEmitter<T>();
   onRowClick(row: any) {
     console.log('Fila clickeada:', row);
@@ -19,7 +24,9 @@ export class GenericTableComponent<T> {
   onEdit(row: any) {
     console.log('Editar:', row);
   }
-
+  getValue(row: T, key: string): any {
+    return (row as any)[key];
+  }
   onDelete(row: any) {
     console.log('Eliminar:', row);
   }

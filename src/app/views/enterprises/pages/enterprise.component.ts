@@ -25,6 +25,7 @@ export class EnterprisesComponent {
     this.enterpriseService.getEnterprises().subscribe((data) => {
       this.enterprises = data;
     });
+    console.log(this.enterprises)
   }
   onRowClick(row: Enterprise) {
     console.log('Fila seleccionada:', row);

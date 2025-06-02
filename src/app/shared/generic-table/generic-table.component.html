@@ -17,6 +17,11 @@
               Eliminar
             </button>
           </ng-container>
+
+          <!-- Otras columnas -->
+          <ng-container *ngSwitchDefault>
+            {{ getValue(row, column.key) }}
+          </ng-container>
         </ng-container>
       </td>
     </tr>
