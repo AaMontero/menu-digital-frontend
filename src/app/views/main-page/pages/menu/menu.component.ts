@@ -6,7 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
 import { MenuService } from '../../../../core/services/menu.service';
-import { Menu } from '../../../../core/models/menu.module';
+import { Menu, MenuDto } from '../../../../core/models/menu.module';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 @Component({
@@ -28,12 +28,28 @@ export class MenuComponent {
   constructor(private router: Router) {}
   private menuService = inject(MenuService);
   isLoggedIn = false;
-  menus: Menu[] = [];
+  menus: MenuDto[] = [];
   ngOnInit(): void {
-    this.menuService.getMenu().subscribe((data) => {
-      this.menus = data;
-    });
+    const token = localStorage.getItem('token');
+    if (token) {
+      const payloadBase64 = token.split('.')[1];
+      const payloadJson = atob(payloadBase64);
+      const payload = JSON.parse(payloadJson);
+      console.log(payload);
+
+      // Asegúrate de que exista el campo idUser en el payload
+      if (payload.idUser) {
+        this.menuService.getMenuByUser(payload.idUser).subscribe((data) => {
+          this.menus = data;
+        });
+      } else {
+        console.warn('idUser no está presente en el token');
+      }
+    } else {
+      console.warn('Token no encontrado en localStorage');
+    }
   }
+
   onLogin() {
     this.router.navigate(['/login']);
   }
