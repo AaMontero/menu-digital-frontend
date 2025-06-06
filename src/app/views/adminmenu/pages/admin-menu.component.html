@@ -1,0 +1,153 @@
+<h2>Cabecera de la página</h2>
+<ng-template #formularioTemplate let-tab>
+  <div class="contenedor">
+    <div>
+      <div class="example-container-icons" id="available-icons">
+        <h5 class="titlesSection">Inputs</h5>
+        <div
+          cdkDropList
+          #availableList="cdkDropList"
+          [cdkDropListData]="available"
+          [cdkDropListConnectedTo]="doneListRefs"
+          class="example-list"
+          (cdkDropListDropped)="drop($event)"
+        >
+          <div
+            class="example-box"
+            *ngFor="let item of available; trackBy: trackItem"
+            cdkDrag
+          >
+            <div class="icon-text">
+                asdasd
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class ="'flex-2'">
+      <div class="generico-inner-container">
+        <!-- Contenedor vertical para listas -->
+        <div class="lists-wrapper">
+          <!-- Botón para agregar grupos -->
+          <div class="contenedor-flex">
+            <div class="container row">
+              <div class="col-6">
+                <input
+                  type="text"
+                  class="nombre nombre-titulo"
+                  [(ngModel)]="itemRecibido.name"
+                  placeholder="Nombre de la página"
+                />
+                <input
+                  type="text"
+                  class="description description-titulo col-6"
+                  [(ngModel)]="itemRecibido.description"
+                  placeholder="Descripción de la página"
+                />
+              </div>
+            </div>
+
+            <div class="lado-derecho">
+              Boton
+            </div>
+          </div>
+
+          <!-- Múltiples listas destino -->
+          <div
+            class="example-container"
+            *ngFor="let list of doneLists; let i = index"
+          >
+            <div
+              class="titleSetionZone container"
+              *ngIf="doneLists[i].field.isVisible"
+            >
+              <div class="col-8">
+                Boton 
+              </div>
+
+              <div class="col-4-fake align-right">
+                boton
+              </div>
+            </div>
+            <div class="align-right" *ngIf="!doneLists[i].field.isVisible">
+              boton
+            </div>
+            <div class="group-columns">
+              <div
+                *ngFor="let listElem of list.items; let j = index"
+                class="example-column"
+              >
+                <div
+                  cdkDropList
+                  [id]="'doneList_' + i + '_' + j"
+                  #doneList="cdkDropList"
+                  [cdkDropListData]="listElem"
+                  [cdkDropListConnectedTo]="[availableList]"
+                  class="example-list"
+                  (cdkDropListDropped)="drop($event)"
+                >
+                 
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="toolbar-sidebar">
+        <h4 class="titlesSection">Herramientas</h4>
+        <div *ngIf="isEditingComponent">
+          <form-create-field-form
+            [field]="selectedComponent"
+            [type]="selectedType"
+            [isEdit]="false"
+          ></form-create-field-form>
+        </div>
+        <div>
+          <drag-drop-edit-group
+            *ngIf="isEditGrouping"
+            [selectedGroup]="groupSelected"
+            (colorChanged)="onColorUpdate($event)"
+            (columnsChanged)="onColumnsUpdate($event)"
+          >
+          </drag-drop-edit-group>
+        </div>
+
+        <!-- Mover el botón aquí dentro -->
+      </div>
+    </div>
+  </div>
+</ng-template>
+<div class="tabs-container">
+  <ul class="tab-header">
+    <li
+      *ngFor="let tab of tabs; let i = index"
+      [class.active]="i === selectedTab"
+      (click)="selectTab(i)"
+    >
+      {{ getNombreCorto(i) }}
+    </li>
+    <li class="add-tab botones-centrados">
+      <div class="contenedor-botones">
+        
+        <button class="boton-guardar-fijo" (click)="guardarFormulario()">
+          Guardar
+        </button>
+      </div>
+    </li>
+  </ul>
+
+  <div class="tab-content">
+    <ng-container *ngIf="tabs.length > 0">
+      <!-- Inserta aquí el contenido completo del formulario -->
+      <ng-container
+        *ngTemplateOutlet="
+          formularioTemplate;
+          context: { $implicit: tabs[selectedTab] }
+        "
+      ></ng-container>
+    </ng-container>
+  </div>
+</div>
