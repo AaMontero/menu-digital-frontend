@@ -1,7 +1,7 @@
 <h2>Cabecera de la página</h2>
 <ng-template #formularioTemplate let-tab>
   <div class="contenedor">
-    <div>
+    <div class="'flex-1'">
       <div class="example-container-icons" id="available-icons">
         <h5 class="titlesSection">Inputs</h5>
         <div
@@ -17,15 +17,13 @@
             *ngFor="let item of available; trackBy: trackItem"
             cdkDrag
           >
-            <div class="icon-text">
-                asdasd
-            </div>
+            <div class="icon-text">asdasd</div>
           </div>
         </div>
       </div>
     </div>
 
-    <div class ="'flex-2'">
+    <div class="'flex-2'">
       <div class="generico-inner-container">
         <!-- Contenedor vertical para listas -->
         <div class="lists-wrapper">
@@ -48,9 +46,8 @@
               </div>
             </div>
 
-            <div class="lado-derecho">
-              Boton
-            </div>
+            <div class="lado-derecho">Boton</div>
+            <button (click)="addGroup()">Haz clic</button>
           </div>
 
           <!-- Múltiples listas destino -->
@@ -60,19 +57,29 @@
           >
             <div
               class="titleSetionZone container"
-              *ngIf="doneLists[i].field.isVisible"
+              [ngClass]="getColorClass(doneLists[i].field.color || '#0D5580')"
             >
               <div class="col-8">
-                Boton 
+                <input
+                  type="text"
+                  class="nombre"
+                  [(ngModel)]="doneLists[i].field.name"
+                  placeholder="Título de la cabecera"
+                />
+                <input
+                  type="text"
+                  class="description"
+                  [(ngModel)]="doneLists[i].field.descriptionGroup"
+                  placeholder="Descripción de la cabecera"
+                />
               </div>
-
               <div class="col-4-fake align-right">
-                boton
+                <button>Boton medio 1</button>
+                <button>Boton medio 1</button>
+                <button>Boton medio 1</button>
               </div>
             </div>
-            <div class="align-right" *ngIf="!doneLists[i].field.isVisible">
-              boton
-            </div>
+            <div class="align-right">boton</div>
             <div class="group-columns">
               <div
                 *ngFor="let listElem of list.items; let j = index"
@@ -87,7 +94,18 @@
                   class="example-list"
                   (cdkDropListDropped)="drop($event)"
                 >
-                 
+                  asdasdasd
+                </div>
+                <div
+                  *ngFor="
+                    let item of listElem;
+                    let k = index;
+                    trackBy: trackItem
+                  "
+                  cdkDrag
+                  (click)="openEditComponent(item)"
+                >
+                  asdasdasdads
                 </div>
               </div>
             </div>
@@ -98,24 +116,17 @@
     <div>
       <div class="toolbar-sidebar">
         <h4 class="titlesSection">Herramientas</h4>
-        <div *ngIf="isEditingComponent">
-          <form-create-field-form
-            [field]="selectedComponent"
-            [type]="selectedType"
-            [isEdit]="false"
-          ></form-create-field-form>
+        <div>
+          <menu-create-field-form> </menu-create-field-form>
         </div>
         <div>
           <drag-drop-edit-group
-            *ngIf="isEditGrouping"
             [selectedGroup]="groupSelected"
             (colorChanged)="onColorUpdate($event)"
             (columnsChanged)="onColumnsUpdate($event)"
           >
           </drag-drop-edit-group>
         </div>
-
-        <!-- Mover el botón aquí dentro -->
       </div>
     </div>
   </div>
@@ -131,7 +142,6 @@
     </li>
     <li class="add-tab botones-centrados">
       <div class="contenedor-botones">
-        
         <button class="boton-guardar-fijo" (click)="guardarFormulario()">
           Guardar
         </button>
@@ -140,7 +150,7 @@
   </ul>
 
   <div class="tab-content">
-    <ng-container *ngIf="tabs.length > 0">
+    <ng-container>
       <!-- Inserta aquí el contenido completo del formulario -->
       <ng-container
         *ngTemplateOutlet="

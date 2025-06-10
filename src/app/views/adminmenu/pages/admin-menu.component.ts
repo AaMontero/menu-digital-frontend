@@ -1,9 +1,5 @@
-import { Component, inject, Input } from '@angular/core';
-import { GenericTableComponent } from '../../../shared/generic-table/generic-table.component';
-import { EnterpriseService } from '../../../core/services/enterprise.service';
-import { Enterprise } from '../../../core/models/enterprise.model';
-import { AuthService } from '../../../core/services/auth.service';
-import { MenuService } from '../../../core/services/menu.service';
+import { Component, Input } from '@angular/core';
+import { MenuCreateFieldForm } from '../components/menu-create.field-form/menu-create-field-form.component';
 import {
   ComponentGeneric,
   DoneListItem,
@@ -15,18 +11,38 @@ import {
   PageGenericRequest,
 } from '../../../core/models/interfaces/menu.interface';
 import { Router } from '@angular/router';
-import { checkboxInputBase, createDefaultGroupGeneric, dateInputBase, formComponentGenericToPagesForm, formPagesComponentGenericToListDoneList, numerInputBase, radioInputBase, selectInputBase, textInputBase } from '../../../core/mappers/menu.mappers';
+
+import {
+  checkboxInputBase,
+  createDefaultGroupGeneric,
+  dateInputBase,
+  formComponentGenericToPagesForm,
+  formPagesComponentGenericToListDoneList,
+  numerInputBase,
+  radioInputBase,
+  selectInputBase,
+  textInputBase,
+} from '../../../core/mappers/menu.mappers';
 import Notiflix from 'notiflix';
 import {
   CdkDragDrop,
   moveItemInArray,
   transferArrayItem,
-  CdkDrag,
-  CdkDropList,
+  DragDropModule,
 } from '@angular/cdk/drag-drop';
+import { DragDropEditComponent } from '../components/drag-drop-edit-grouping/drag-drop-edit-group.component';
+import { CommonModule } from '@angular/common';
+import { CAlert } from '../../../shared/domain/enum/messagfge';
+import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-enterprises',
-  imports: [],
+  imports: [
+    MenuCreateFieldForm,
+    DragDropEditComponent,
+    CommonModule,
+    FormsModule,
+    DragDropModule,
+  ],
   templateUrl: './admin-menu.component.html',
   styleUrl: './admin-menu.component.css',
   standalone: true,
@@ -57,18 +73,20 @@ export class AdminMenu {
       this.infoPageForm = new FormPageGeneric();
     }
   }
-  isEdit: boolean = false;
+  private readonly BLOCK_SELECTOR = '.div-container';
+  @Input() formConfig!: FormConfig;
+  isEdit: boolean;
   tabs: any[] = [];
   selectedTab: number = 0;
   infoPageForm: FormPageGeneric;
-  field: PageGenericComponent = new PageGenericComponent();
+  field: PageGenericComponent;
   groupSelected: GroupingComponentGeneric = new GroupingComponentGeneric();
   isEditGrouping: boolean = false;
   listDoneLists: DoneListItem[][] = [];
   doneLists: DoneListItem[] = [];
   dataForms: FormsGeneric[] = [];
-  itemRecibido: FormsGeneric = new FormsGeneric();
-  @Input() formConfig!: FormConfig;
+  itemRecibido: FormsGeneric;
+  
   isEditingComponent = false;
   selectedType = 'text';
   selectedItem: ComponentGeneric = new ComponentGeneric();
@@ -127,6 +145,52 @@ export class AdminMenu {
     if (this.tabs.length === 0) {
       this.addTab();
     }
+    this.listDoneLists = [
+      [
+        // Primer grupo de DoneListItem[]
+        {
+          field: {
+            id: 'group1',
+            name: 'Grupo 1',
+            descriptionGroup: 'Descripción del grupo 1',
+            color: '#FF5733',
+            columnsAmount: 2,
+            opcionesSeleccionadas: ['op1', 'op2'],
+            itemOrder: 1,
+            isVisible: true,
+            components: [], // O instancias de ComponentDto si lo tienes definido
+          },
+          items: [
+            [
+              // Primer grupo de ComponentGeneric[]
+              {
+                id: 'comp1',
+                nameComponent: 'Nombre 1',
+                label: 'Label 1',
+                type: 'text',
+                defaultValue: '',
+                required: true,
+                column: 0,
+                row: 0,
+                style: 'border: 1px solid #ccc',
+                options: [{ label: 'Opción 1', value: 1 }],
+              },
+              {
+                id: 'comp2',
+                nameComponent: 'Nombre 2',
+                label: 'Label 2',
+                type: 'number',
+                defaultValue: 10,
+                required: false,
+                column: 1,
+                row: 0,
+                style: 'color: blue',
+              },
+            ],
+          ],
+        },
+      ],
+    ];
   }
 
   getIcon(type: string): string {
@@ -137,7 +201,10 @@ export class AdminMenu {
     const base = this.BASE_COMPONENTES[type];
     return base ? structuredClone(base) : new ComponentGeneric();
   }
-
+  daClick() {
+    console.log('Botón presionado');
+    console.log(this.listDoneLists);
+  }
   addGroup() {
     const newDoneList = createDefaultGroupGeneric(
       this.doneLists,
@@ -177,7 +244,7 @@ export class AdminMenu {
   drop(event: CdkDragDrop<ComponentGeneric[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(
-        event.container.data,w
+        event.container.data,
         event.previousIndex,
         event.currentIndex
       );
@@ -207,7 +274,6 @@ export class AdminMenu {
     this.groupSelected = group.field;
     this.selectedGroupIndex = this.doneLists.indexOf(group);
   }
-
 
   deleteGrouping(grouping: GroupingComponentGeneric, i: number): void {
     const confirmar = confirm(`¿Estás seguro de eliminar "${grouping.name}"?`);
@@ -286,7 +352,6 @@ export class AdminMenu {
     dto.description = input.descriptionPage;
     dto.type = input.typePage;
     dto.forms = input.forms || [];
-    
   }
   async updateFullPageForm(
     id: string,

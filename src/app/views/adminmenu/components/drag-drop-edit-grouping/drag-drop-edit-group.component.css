@@ -1,0 +1,39 @@
+.config-panel {
+  padding: 10px;
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+
+.color-options {
+    margin-top: 10px;
+  display: flex;
+  gap: 10px;
+  margin-bottom: 25px;
+}
+
+.color-option {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.color-circle {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  display: inline-block;
+  margin-left: 5px;
+}
+
+input[type="radio"] {
+  accent-color: #0D5580;
+  cursor: pointer;
+}
+
+.column-options label {
+    margin-top: 10px;
+  display: block;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
