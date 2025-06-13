@@ -1,0 +1,6 @@
+.rectangulo {
+  width: 200px;       /* o cualquier ancho deseado */
+  height: 100px;      /* o cualquier alto deseado */
+  background-color: #ccc;  /* gris claro */
+  border: 1px solid #999;  /* borde opcional */
+}

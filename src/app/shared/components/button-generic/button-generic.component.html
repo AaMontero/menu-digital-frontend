@@ -1,0 +1,85 @@
+<ng-container [ngSwitch]="variant">
+  <!-- mat-raised-button -->
+  <button
+    *ngSwitchCase="'mat-raised-button'"
+    mat-raised-button
+    [disabled]="disabled || loading"
+    [class]="customClass"
+    (click)="btnClick.emit()"
+  >
+    <ng-container *ngIf="!loading; else spinnerTemplate">
+      <mat-icon *ngIf="icon && iconPosition === 'start'" class="icon">
+        {{ icon }}
+      </mat-icon>
+      {{ text }}
+      <mat-icon *ngIf="icon && iconPosition === 'end'" class="icon">
+        {{ icon }}
+      </mat-icon>
+    </ng-container>
+
+    <ng-template #spinnerTemplate>
+      <div class="row">
+        <mat-progress-spinner
+          class="container-spinner"
+          mode="indeterminate"
+          diameter="15"
+          strokeWidth="3"
+          color="accent"
+        >
+        </mat-progress-spinner>
+        <span>{{ text }}</span>
+      </div>
+    </ng-template>
+  </button>
+
+  <!-- mat-icon-button -->
+  <button
+    *ngSwitchCase="'mat-icon-button'"
+    mat-icon-button
+    [color]="color"
+    [disabled]="disabled"
+    [ngClass]="customClass"
+    [ngStyle]="customStyle"
+    (click)="btnClick.emit()"
+    [attr.aria-label]="text"
+  >
+    <mat-icon>{{ icon }}</mat-icon>
+  </button>
+
+  <!-- mat-fab -->
+  <button
+    *ngSwitchCase="'mat-fab'"
+    mat-fab
+    [color]="color"
+    [disabled]="disabled"
+    [ngClass]="customClass"
+    [ngStyle]="customStyle"
+    (click)="btnClick.emit()"
+  >
+    <mat-icon *ngIf="icon">{{ icon }}</mat-icon>
+  </button>
+
+  <mat-icon
+    *ngSwitchCase="'mat-icon2'"
+    (click)="btnClick.emit()"
+    matTooltip="{{ tooltipText }}"
+    matTooltipPosition="above"
+    [color]="color"
+    aria-label="text"
+  >
+    {{ icon }}
+  </mat-icon>
+
+  <mat-icon
+    *ngSwitchCase="'mat-icon-custom'"
+    matTooltip="{{ tooltipText }}"
+    matTooltipPosition="above"
+    style="cursor: pointer; transition: transform 0.2s ease"
+    [ngClass]="customClass"
+    [ngStyle]="customStyle"
+    [attr.aria-label]="tooltipText"
+    (click)="btnClick.emit()"
+  >
+    {{ icon }}
+  </mat-icon>
+</ng-container>

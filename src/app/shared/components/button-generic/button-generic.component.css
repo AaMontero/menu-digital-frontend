@@ -1,0 +1,51 @@
+.theme-button {
+  background-color: var(--theme-btn-bg) !important;
+  color: var(--theme-btn-color) !important;
+}
+
+.theme-button:hover {
+  background-color: var(--theme-btn-hover-bg) !important;
+}
+
+.mat-icon-drag {
+  font-size: 40px !important;
+  line-height: 1 !important;
+  overflow: visible !important;
+}
+
+.mat-icon-edit {
+  font-size: 30px;
+  line-height: 1;
+  overflow: visible;
+}
+
+.mat-icon-edit-subtitle {
+  font-size: 21px !important;
+  line-height: 1;
+  overflow: visible;
+}
+.button-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.spinner-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.button-content.loading {
+  opacity: 0.5;
+}
+
+.container-spinner {
+  margin-right: 10px;
+}
+
+.mat-accent {
+  --mdc-circular-progress-active-indicator-color: #ffffff;
+}

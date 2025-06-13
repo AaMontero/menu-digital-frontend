@@ -212,7 +212,7 @@ export function createDefaultGroupGeneric(
   newField.color = defaultColorGroup;
   const newDoneList: DoneListItem = {
     items: Array.from({ length: 1 }, () => []),
-    field: newField,
+    field: newField
   };
   return newDoneList;
 }

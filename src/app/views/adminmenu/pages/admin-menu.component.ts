@@ -30,18 +30,21 @@ import {
   transferArrayItem,
   DragDropModule,
 } from '@angular/cdk/drag-drop';
-import { DragDropEditComponent } from '../components/drag-drop-edit-grouping/drag-drop-edit-group.component';
 import { CommonModule } from '@angular/common';
 import { CAlert } from '../../../shared/domain/enum/messagfge';
 import { FormsModule } from '@angular/forms';
+import { ButtonGenericComponent } from '../../../shared/components/button-generic/button-generic.component';
+import { ContenedorGComponent } from '../../../shared/components/contenedor-generic/contenedor-generic.component';
+import { RectanguloGrisComponent } from '../../../shared/components/rectangle/rectangle.component';
 @Component({
   selector: 'app-enterprises',
   imports: [
-    MenuCreateFieldForm,
-    DragDropEditComponent,
     CommonModule,
     FormsModule,
     DragDropModule,
+    ButtonGenericComponent,
+    ContenedorGComponent,
+    RectanguloGrisComponent,
   ],
   templateUrl: './admin-menu.component.html',
   styleUrl: './admin-menu.component.css',
@@ -86,7 +89,7 @@ export class AdminMenu {
   doneLists: DoneListItem[] = [];
   dataForms: FormsGeneric[] = [];
   itemRecibido: FormsGeneric;
-  
+
   isEditingComponent = false;
   selectedType = 'text';
   selectedItem: ComponentGeneric = new ComponentGeneric();
@@ -95,6 +98,7 @@ export class AdminMenu {
   available: ComponentGeneric[] = [];
   visibilidadSecciones: boolean[] = [];
   selectedGroupIndex: number = -1;
+  datos: any[] = [];
   private readonly ICONOS_TIPO: Record<string, string> = {
     checkbox: 'check_box',
     date: 'event',
@@ -145,52 +149,6 @@ export class AdminMenu {
     if (this.tabs.length === 0) {
       this.addTab();
     }
-    this.listDoneLists = [
-      [
-        // Primer grupo de DoneListItem[]
-        {
-          field: {
-            id: 'group1',
-            name: 'Grupo 1',
-            descriptionGroup: 'Descripción del grupo 1',
-            color: '#FF5733',
-            columnsAmount: 2,
-            opcionesSeleccionadas: ['op1', 'op2'],
-            itemOrder: 1,
-            isVisible: true,
-            components: [], // O instancias de ComponentDto si lo tienes definido
-          },
-          items: [
-            [
-              // Primer grupo de ComponentGeneric[]
-              {
-                id: 'comp1',
-                nameComponent: 'Nombre 1',
-                label: 'Label 1',
-                type: 'text',
-                defaultValue: '',
-                required: true,
-                column: 0,
-                row: 0,
-                style: 'border: 1px solid #ccc',
-                options: [{ label: 'Opción 1', value: 1 }],
-              },
-              {
-                id: 'comp2',
-                nameComponent: 'Nombre 2',
-                label: 'Label 2',
-                type: 'number',
-                defaultValue: 10,
-                required: false,
-                column: 1,
-                row: 0,
-                style: 'color: blue',
-              },
-            ],
-          ],
-        },
-      ],
-    ];
   }
 
   getIcon(type: string): string {
@@ -261,7 +219,7 @@ export class AdminMenu {
       );
     }
   }
-  datos: any[] = [];
+  
 
   openEditComponent(item: ComponentGeneric) {
     this.selectedComponent = item;
@@ -300,8 +258,7 @@ export class AdminMenu {
       this.tabs.splice(this.selectedTab, 1);
     }
   }
-
-  // Llamado a las API de guardado y actualización
+  
   async guardarFormulario() {
     try {
       Notiflix.Block.standard(

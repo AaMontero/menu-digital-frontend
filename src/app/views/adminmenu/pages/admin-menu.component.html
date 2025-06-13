@@ -1,33 +1,42 @@
 <h2>Cabecera de la página</h2>
 <ng-template #formularioTemplate let-tab>
   <div class="contenedor">
-    <div class="'flex-1'">
-      <div class="example-container-icons" id="available-icons">
-        <h5 class="titlesSection">Inputs</h5>
-        <div
-          cdkDropList
-          #availableList="cdkDropList"
-          [cdkDropListData]="available"
-          [cdkDropListConnectedTo]="doneListRefs"
-          class="example-list"
-          (cdkDropListDropped)="drop($event)"
-        >
+    <contenedor-generico-comp>
+      <div class="'flex-1'">
+        <div class="example-container-icons" id="available-icons">
+          <h5 class="titlesSection">Inputs</h5>
           <div
-            class="example-box"
-            *ngFor="let item of available; trackBy: trackItem"
-            cdkDrag
+            cdkDropList
+            #availableList="cdkDropList"
+            [cdkDropListData]="available"
+            [cdkDropListConnectedTo]="doneListRefs"
+            class="example-list"
+            (cdkDropListDropped)="drop($event)"
           >
-            <div class="icon-text">asdasd</div>
+            <div
+              class="example-box"
+              *ngFor="let item of available; trackBy: trackItem"
+              cdkDrag
+            >
+              <div class="icon-text">
+                <lib-button-generic
+                  [variant]="'mat-icon-custom'"
+                  [color]="'primary'"
+                  [icon]="getIcon(item.type ?? '')"
+                  [customClass]="'mat-icon-drag'"
+                  class="mat-icon-gray"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-
-    <div class="'flex-2'">
+    </contenedor-generico-comp>
+    <contenedor-generico-comp [customClass]="'flex-2'">
       <div class="generico-inner-container">
         <!-- Contenedor vertical para listas -->
         <div class="lists-wrapper">
-          <!-- Botón para agregar grupos -->
+          
           <div class="contenedor-flex">
             <div class="container row">
               <div class="col-6">
@@ -46,8 +55,26 @@
               </div>
             </div>
 
-            <div class="lado-derecho">Boton</div>
-            <button (click)="addGroup()">Haz clic</button>
+            <div class="lado-derecho">
+              <lib-button-generic
+                class="boton_editar"
+                [variant]="'mat-icon-custom'"
+                [color]="'primary'"
+                (btnClick)="deleteForm()"
+                [icon]="'delete'"
+                [tooltipText]="'Eliminar Página'"
+                [customClass]="'mat-icon-edit'"
+                class="mat-icon-blue"
+              ></lib-button-generic>
+              <lib-button-generic
+                [variant]="'mat-icon-custom'"
+                [color]="'primary'"
+                (btnClick)="addGroup()"
+                [icon]="'add_card'"
+                [tooltipText]="'Agregar Sección'"
+                [customClass]="'mat-icon-edit'"
+              ></lib-button-generic>
+            </div>
           </div>
 
           <!-- Múltiples listas destino -->
@@ -57,6 +84,7 @@
           >
             <div
               class="titleSetionZone container"
+              *ngIf="doneLists[i].field.isVisible"
               [ngClass]="getColorClass(doneLists[i].field.color || '#0D5580')"
             >
               <div class="col-8">
@@ -74,12 +102,71 @@
                 />
               </div>
               <div class="col-4-fake align-right">
-                <button>Boton medio 1</button>
-                <button>Boton medio 1</button>
-                <button>Boton medio 1</button>
+                <lib-button-generic
+                  [variant]="'mat-icon-custom'"
+                  [color]="'primary'"
+                  (btnClick)="deleteGrouping(list.field, i)"
+                  [icon]="'delete'"
+                  [tooltipText]="'Eliminar sección'"
+                  [customClass]="'mat-icon-edit-subtitle'"
+                  class="mat-icon-white"
+                ></lib-button-generic>
+                <lib-button-generic
+                  [variant]="'mat-icon-custom'"
+                  [color]="'primary'"
+                  (btnClick)="openEditGroupingBool(doneLists[i])"
+                  [icon]="'edit'"
+                  [tooltipText]="'Editar Sección'"
+                  [customClass]="'mat-icon-edit-subtitle'"
+                ></lib-button-generic>
+                <lib-button-generic
+                  [variant]="'mat-icon-custom'"
+                  [color]="'primary'"
+                  (btnClick)="verGrupo(i)"
+                  [icon]="
+                    visibilidadSecciones[i] ? 'visibility' : 'visibility_off'
+                  "
+                  [tooltipText]="
+                    visibilidadSecciones[i]
+                      ? 'Ocultar Sección'
+                      : 'Mostrar Sección'
+                  "
+                  [customClass]="'mat-icon-edit-subtitle'"
+                ></lib-button-generic>
               </div>
             </div>
-            <div class="align-right">boton</div>
+            <div class="align-right" *ngIf="!doneLists[i].field.isVisible">
+              <lib-button-generic
+                [variant]="'mat-icon-custom'"
+                [color]="'primary'"
+                (btnClick)="deleteGrouping(list.field, i)"
+                [icon]="'delete'"
+                [tooltipText]="'Eliminar sección'"
+                [customClass]="'mat-icon-edit-subtitle'"
+              ></lib-button-generic>
+              <lib-button-generic
+                [variant]="'mat-icon-custom'"
+                [color]="'primary'"
+                (btnClick)="openEditGroupingBool(doneLists[i])"
+                [icon]="'edit'"
+                [tooltipText]="'Editar Sección'"
+                [customClass]="'mat-icon-edit-subtitle'"
+              ></lib-button-generic>
+              <lib-button-generic
+                [variant]="'mat-icon-custom'"
+                [color]="'primary'"
+                (btnClick)="verGrupo(i)"
+                [icon]="
+                  visibilidadSecciones[i] ? 'visibility' : 'visibility_off'
+                "
+                [tooltipText]="
+                  visibilidadSecciones[i]
+                    ? 'Ocultar Sección'
+                    : 'Mostrar Sección'
+                "
+                [customClass]="'mat-icon-edit-subtitle'"
+              ></lib-button-generic>
+            </div>
             <div class="group-columns">
               <div
                 *ngFor="let listElem of list.items; let j = index"
@@ -94,41 +181,22 @@
                   class="example-list"
                   (cdkDropListDropped)="drop($event)"
                 >
-                  asdasdasd
-                </div>
-                <div
-                  *ngFor="
-                    let item of listElem;
-                    let k = index;
-                    trackBy: trackItem
-                  "
-                  cdkDrag
-                  (click)="openEditComponent(item)"
-                >
-                  asdasdasdads
+                  <app-rectangulo-gris
+                    *ngFor="
+                      let item of listElem;
+                      let k = index;
+                      trackBy: trackItem
+                    "
+                    cdkDrag
+                    (click)="openEditComponent(item)"
+                  ></app-rectangulo-gris>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <div>
-      <div class="toolbar-sidebar">
-        <h4 class="titlesSection">Herramientas</h4>
-        <div>
-          <menu-create-field-form> </menu-create-field-form>
-        </div>
-        <div>
-          <drag-drop-edit-group
-            [selectedGroup]="groupSelected"
-            (colorChanged)="onColorUpdate($event)"
-            (columnsChanged)="onColumnsUpdate($event)"
-          >
-          </drag-drop-edit-group>
-        </div>
-      </div>
-    </div>
+    </contenedor-generico-comp>
   </div>
 </ng-template>
 <div class="tabs-container">
@@ -151,7 +219,6 @@
 
   <div class="tab-content">
     <ng-container>
-      <!-- Inserta aquí el contenido completo del formulario -->
       <ng-container
         *ngTemplateOutlet="
           formularioTemplate;
