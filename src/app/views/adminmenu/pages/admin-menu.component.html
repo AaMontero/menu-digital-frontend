@@ -18,15 +18,12 @@
               *ngFor="let item of available; trackBy: trackItem"
               cdkDrag
             >
-              <div class="icon-text">
-                <lib-button-generic
-                  [variant]="'mat-icon-custom'"
-                  [color]="'primary'"
-                  [icon]="getIcon(item.type ?? '')"
-                  [customClass]="'mat-icon-drag'"
-                  class="mat-icon-gray"
-                />
-              </div>
+              <app-menu-card
+                icon="📊"
+                title="Reportes"
+                description="Visualiza los reportes mensuales"
+                cdkDrag
+              ></app-menu-card>
             </div>
           </div>
         </div>
@@ -36,7 +33,6 @@
       <div class="generico-inner-container">
         <!-- Contenedor vertical para listas -->
         <div class="lists-wrapper">
-          
           <div class="contenedor-flex">
             <div class="container row">
               <div class="col-6">
@@ -181,15 +177,18 @@
                   class="example-list"
                   (cdkDropListDropped)="drop($event)"
                 >
-                  <app-rectangulo-gris
+                  <app-menu-card
                     *ngFor="
                       let item of listElem;
                       let k = index;
                       trackBy: trackItem
                     "
+                    icon="📊"
+                    title="Reportes"
+                    description="Visualiza los reportes mensuales"
                     cdkDrag
                     (click)="openEditComponent(item)"
-                  ></app-rectangulo-gris>
+                  ></app-menu-card>
                 </div>
               </div>
             </div>

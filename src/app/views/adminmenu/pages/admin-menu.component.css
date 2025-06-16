@@ -55,6 +55,9 @@
   flex-direction: column;
   gap: 4px;
 }
+.example-list{
+  min-height: 20px;
+}
 
 .boton_editar {
   width: 30px;
@@ -93,6 +96,7 @@
 .example-column {
   flex: 1;
   min-width: 250px;
+
 }
 
 .boton-derecha {

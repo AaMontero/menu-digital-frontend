@@ -211,8 +211,8 @@ export function createDefaultGroupGeneric(
   newField.isVisible = true;
   newField.color = defaultColorGroup;
   const newDoneList: DoneListItem = {
-    items: Array.from({ length: 1 }, () => []),
-    field: newField
+    items: [[], []],
+    field: newField,
   };
   return newDoneList;
 }

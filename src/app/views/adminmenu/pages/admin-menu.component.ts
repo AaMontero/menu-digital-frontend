@@ -35,7 +35,7 @@ import { CAlert } from '../../../shared/domain/enum/messagfge';
 import { FormsModule } from '@angular/forms';
 import { ButtonGenericComponent } from '../../../shared/components/button-generic/button-generic.component';
 import { ContenedorGComponent } from '../../../shared/components/contenedor-generic/contenedor-generic.component';
-import { RectanguloGrisComponent } from '../../../shared/components/rectangle/rectangle.component';
+import { MenuCardComponent } from '../components/menu-card/menu-card.component';
 @Component({
   selector: 'app-enterprises',
   imports: [
@@ -44,7 +44,7 @@ import { RectanguloGrisComponent } from '../../../shared/components/rectangle/re
     DragDropModule,
     ButtonGenericComponent,
     ContenedorGComponent,
-    RectanguloGrisComponent,
+    MenuCardComponent
   ],
   templateUrl: './admin-menu.component.html',
   styleUrl: './admin-menu.component.css',
