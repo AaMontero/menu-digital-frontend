@@ -6,4 +6,6 @@ import { Component } from '@angular/core';
   styleUrl: './menu-example.component.css',
   standalone: true,
 })
-export class MenuExample {}
+export class MenuExample {
+    
+}
